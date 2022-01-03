@@ -8,7 +8,7 @@ parser.add_argument("--test", dest="TEST_FILE", required=True,
 parser.add_argument("--out", dest="OUT_PATH", default="output",
                     help="Output file path", metavar="FILE")
 
-parser.add_argument("--max_len", dest="MAX_LENGTH", type=int,
+parser.add_argument("--max_len", dest="MAX_LENGTH", type=int, required=True,
                     help="Maximum length for training/testing dataset")
 
 parser.add_argument("--nfeature", dest="NUM_FEATURE", type=int, default=20,
@@ -25,7 +25,7 @@ parser.add_argument("--wsizes", dest="WINDOW_SIZES", nargs='+', type=int, defaul
 
 parser.add_argument("--nfilter", dest="NUM_FILTER", default=256, type=int,
                     help="Number of filters for each evolution layer. Default value is 256")
-parser.add_argument("--nnode", dest="NUM_NODES", default=1024, type=int,
+parser.add_argument("--nhidden", dest="NUM_HIDDEN", default=1024, type=int,
                     help="Number of nodes for fully connected layer. Default value is 1024")
 parser.add_argument("--nclass", dest="NUM_CLASS", default=256, type=int,
                     help="Number of classes. Default value is 2")
