@@ -63,12 +63,6 @@ x_test, y_test = load_ds(args.TEST_FILE)
 x_train = np.reshape( x_train, [-1,1, args.MAX_LENGTH, args.NUM_FEATURE] )
 x_test = np.reshape( x_test, [-1,1, args.MAX_LENGTH, args.NUM_FEATURE] )
 
-print(f"Train shape: {x_train.shape}")
-print(f"Test shape: {x_test.shape}")
-
-print(f"Train label shape: {y_train.shape}")
-print(f"Test label shape: {y_test.shape}")
-
 # Convert to categorical labels
 import tensorflow as tf
 y_train = tf.keras.utils.to_categorical(y_train,args.NUM_CLASS)
@@ -83,7 +77,7 @@ import math
 
 from sklearn import metrics
 from sklearn.metrics import roc_curve
-from tensorflow.keras import Model, layers
+
 def val_binary(epoch,logs):
 
   pred = model.predict(x_test)
@@ -115,9 +109,12 @@ def val_binary(epoch,logs):
 from model import mCNN
 
 model = mCNN(
-    num_filters=args.NUM_FILTER,
-    num_hidden=args.NUM_HIDDEN,
-    window_sizes=args.WINDOW_SIZES)
+  window_sizes=args.WINDOW_SIZES,
+  max_length=args.MAX_LENGTH,
+  num_filters=args.NUM_FILTER,
+  num_hidden=args.NUM_HIDDEN,
+  num_class=args.NUM_CLASS
+)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 model.build(input_shape=(1, 1,args.MAX_LENGTH, args.NUM_FEATURE))
 model.summary()

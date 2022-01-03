@@ -2,21 +2,17 @@ import tensorflow as tf
 
 from tensorflow.keras import Model, layers
 
-MAX_LENGTH  = 5000
-WIN_SIZES   = [8,16,24,32,40,48]
-NUM_FEATURE = 20
-NUM_FILTERS = 256
-NUM_HIDDEN  = 1024
-NUM_CLASSES = 2
-
 class mCNN(Model):
   def __init__(self,
-               input_shape=(1,MAX_LENGTH, NUM_FEATURE),
-               window_sizes=WIN_SIZES,
-               num_filters=NUM_FILTERS,
-               num_hidden=NUM_HIDDEN):
+               window_sizes=[8,16,24,32,40,48],
+               max_length=5000,
+               num_feature=20,
+               num_filters=256,
+               num_hidden=1024,
+               num_class=2):
     super(mCNN, self).__init__()
     # Add input layer
+    input_shape=(1,max_length,num_feature)
     self.input_layer = tf.keras.Input(input_shape)
     self.window_sizes = window_sizes
     self.conv2d = []
@@ -43,7 +39,7 @@ class mCNN(Model):
       bias_initializer=tf.constant_initializer(0.1),
       kernel_initializer=tf.keras.initializers.GlorotUniform()
     )
-    self.fc2 = layers.Dense(NUM_CLASSES,activation='softmax',kernel_regularizer=tf.keras.regularizers.l2(1e-3))
+    self.fc2 = layers.Dense(num_class,activation='softmax',kernel_regularizer=tf.keras.regularizers.l2(1e-3))
 
     # Get output layer with `call` method
     self.out = self.call(self.input_layer)
