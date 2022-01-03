@@ -28,8 +28,8 @@ class mCNN(Model):
         kernel_initializer=tf.keras.initializers.GlorotUniform()
       ))
       self.maxpool.append(layers.MaxPooling2D(
-          pool_size=(1,MAX_LENGTH - window_size + 1),
-          strides=(1,MAX_LENGTH),
+          pool_size=(1,max_length - window_size + 1),
+          strides=(1,max_length),
           padding='valid'))
       self.flatten.append(layers.Flatten())
     self.dropout = layers.Dropout(rate=0.7)
