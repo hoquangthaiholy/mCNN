@@ -17,7 +17,7 @@ parser.add_argument("--nfeature", dest="NUM_FEATURE", type=int, default=20,
 parser.add_argument("--batch", dest="BATCH_SIZE", type=int, default=32,
                     help="Batch size for each training process. Default value is 32")
 
-parser.add_argument("--epoch", dest="EPOCH", type=int, default=100,
+parser.add_argument("--epoch", dest="EPOCHS", type=int, default=100,
                     help="Number of epoches. Default value is 100")
 
 parser.add_argument("--wsizes", dest="WINDOW_SIZES", nargs='+', type=int, default=[8,16,24,32,40,48],
@@ -27,7 +27,7 @@ parser.add_argument("--nfilter", dest="NUM_FILTER", default=256, type=int,
                     help="Number of filters for each evolution layer. Default value is 256")
 parser.add_argument("--nhidden", dest="NUM_HIDDEN", default=1024, type=int,
                     help="Number of nodes for fully connected layer. Default value is 1024")
-parser.add_argument("--nclass", dest="NUM_CLASS", default=256, type=int,
+parser.add_argument("--nclass", dest="NUM_CLASS", default=2, type=int,
                     help="Number of classes. Default value is 2")
 
 args = parser.parse_args()
@@ -119,7 +119,7 @@ model = mCNN(
     num_hidden=args.NUM_HIDDEN,
     window_sizes=args.WINDOW_SIZES)
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-model.build(input_shape=(-1, 1,args.MAX_LENGTH, args.NUM_FEATURE))
+model.build(input_shape=(1, 1,args.MAX_LENGTH, args.NUM_FEATURE))
 model.summary()
 
 model.fit(
